@@ -1,26 +1,33 @@
-/* eslint-disable react/prop-types */
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovieInfo } from "../../app/movieInfoSlice/movieInfoSlice";
 
 import "./MovieCard.css";
 
-const MovieCardCard = (props) => {
+const MovieCardCard = () => {
   const navigate = useNavigate();
-  const movieList = props[0];
+  const dispatch = useDispatch();
+  const movieList = useSelector((state) => state.movieSearched.movieList);
 
   const handleClick = (item) => {
-    navigate('movie-info-details', {state: {movieId: item.imdbID}});
-  }
+    navigate("movie-info-details");
+    dispatch(fetchMovieInfo(item.imdbID));
+  };
 
   return (
     <div className="container">
       {movieList &&
         movieList.map((item) => (
-          <Card sx={{ width: 300, margin: 2, height: 550 }} key={item.imdbID} onClick={() => handleClick(item)}>
+          <Card
+            sx={{ width: 300, margin: 2, height: 550 }}
+            key={item.imdbID}
+            onClick={() => handleClick(item)}
+          >
             <CardActionArea>
               <CardMedia
                 component="img"
