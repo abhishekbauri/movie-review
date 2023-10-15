@@ -1,42 +1,11 @@
-import { useLocation } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
-import { useEffect, useState } from "react";
-import Loader from "./Loader";
-import Button from '@mui/material/Button';
-
+import Button from "@mui/material/Button";
+import { useSelector } from "react-redux";
 
 import "./MovieInfo.css";
 
 const MovieInfo = () => {
-  const [infoData, setInfoData] = useState(null);
-  const [loader, setLoader] = useState(true);
-
-  const location = useLocation();
-
-  const { movieId } = location.state;
-
-  const movieSearchWithId = async (id) => {
-    
-    try {
-      const res = await fetch(
-        `https://www.omdbapi.com/?i=${id}&apikey=c9c94dfb`
-      );
-
-      let data = await res.json();
-      setInfoData(data);
-      setLoader(false)
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  useEffect(() => {
-    movieSearchWithId(movieId);
-  }, [movieId]);
-
-  if(loader){
-    return <Loader />
-  }else{
+  const infoData = useSelector((state) => state.movieDetails.movieInfo);
 
   return (
     <section className="main-container">
@@ -77,7 +46,6 @@ const MovieInfo = () => {
       </div>
     </section>
   );
-  }
 };
 
 export default MovieInfo;

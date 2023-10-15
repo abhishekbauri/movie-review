@@ -1,7 +1,7 @@
-import MovieInfo from "./component/MovieInfo";
-import Movies from "./component/Movies";
+import Movies from "./section/Movies";
 import {Routes, Route} from "react-router-dom";
-import Navbar from "./component/Navbar";
+import Navbar from "./component/navbar/Navbar";
+import MoviesDetails from "./section/MoviesDetails";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path= '/' element ={<Movies/>} />
-        <Route path= 'movie-info-details' element ={<MovieInfo/>} />
+        <Route path= 'movie-info-details' element ={<MoviesDetails/>} />
       </Routes>
     </>
   );

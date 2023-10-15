@@ -1,23 +1,24 @@
-/* eslint-disable react/prop-types */
 import TextField from "@mui/material/TextField";
 import MovieIcon from "@mui/icons-material/Movie";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchMovie } from "../../app/movieSearchSlice/movieSearchSlice";
 
 import "./Search.css";
 
-const Search = (props) => {
-
+const Search = () => {
+  const dispatch = useDispatch();
   const [searchMovie, setSearchMovie] = useState("");
 
   const searchMovieHandler = (e) => {
     setSearchMovie(e.target.value);
-  }
+  };
 
   const findMovieHandler = (e) => {
     e.preventDefault();
-    props.onSearchMovie(searchMovie);
-  }
+    dispatch(fetchMovie(searchMovie));
+  };
   return (
     <form onSubmit={findMovieHandler}>
       <TextField
@@ -34,7 +35,7 @@ const Search = (props) => {
         className="input-field"
         value={searchMovie}
         onChange={searchMovieHandler}
-        autoComplete='off'
+        autoComplete="off"
       />
     </form>
   );
