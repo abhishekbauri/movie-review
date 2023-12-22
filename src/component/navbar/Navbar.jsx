@@ -8,7 +8,7 @@ const Navbar = () => {
     <div className="nav">
       <Stack direction="row" alignItems="center" gap={1}>
         <LocalMoviesIcon sx={{ fontSize: 40 }} />
-        <Typography variant="p"> Movie Review</Typography>
+        <Typography variant="p"> Movie Insights</Typography>
         <LocalMoviesIcon sx={{ fontSize: 40 }} />
       </Stack>
     </div>
