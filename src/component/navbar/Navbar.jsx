@@ -1,3 +1,4 @@
+import React, { memo } from "react";
 import LocalMoviesIcon from "@mui/icons-material/LocalMovies";
 import { Stack, Typography } from "@mui/material";
 
@@ -15,4 +16,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

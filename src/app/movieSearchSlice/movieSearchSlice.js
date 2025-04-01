@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchMovie = createAsyncThunk("fetchMovie", async (name) => {
-  const url = `https://www.omdbapi.com/?s=${name}&apikey=c9c94dfb`;
+  const url = `https://www.omdbapi.com/?s=${name}&apikey=${
+    import.meta.env.VITE_API_KEY
+  }`;
   const response = await fetch(url);
   return response.json();
 });
