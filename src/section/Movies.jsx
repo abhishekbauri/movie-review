@@ -1,8 +1,10 @@
-import MovieCardCard from "../component/movieCard/MovieCard";
+import { Suspense, lazy } from "react";
 import Search from "../component/search/Search";
-import Loader from "../component/loader/Loader";
-import ErrorPage from "../component/errorPage/ErrorPage";
 import { useSelector } from "react-redux";
+
+const Loader = lazy(() => import("../component/loader/Loader"));
+const ErrorPage = lazy(() => import("../component/errorPage/ErrorPage"));
+const MovieCardCard = lazy(() => import("../component/movieCard/MovieCard"));
 
 const Movies = () => {
   const loader = useSelector((state) => state.movieSearched.isLoading);
@@ -11,7 +13,15 @@ const Movies = () => {
   return (
     <div className="inner-container">
       <Search />
-      {loader ? <Loader /> : error ? <ErrorPage /> : <MovieCardCard />}
+      <Suspense
+        fallback={
+          <div>
+            <Loader />
+          </div>
+        }
+      >
+        {loader ? <Loader /> : error ? <ErrorPage /> : <MovieCardCard />}
+      </Suspense>
     </div>
   );
 };

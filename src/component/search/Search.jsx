@@ -1,7 +1,7 @@
 import TextField from "@mui/material/TextField";
 import MovieIcon from "@mui/icons-material/Movie";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { fetchMovie } from "../../app/movieSearchSlice/movieSearchSlice";
 
@@ -11,16 +11,34 @@ const Search = () => {
   const dispatch = useDispatch();
   const [searchMovie, setSearchMovie] = useState("");
 
-  const searchMovieHandler = (e) => {
-    setSearchMovie(e.target.value);
+  const debounce = (func, delay) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
   };
 
-  const findMovieHandler = (e) => {
-    e.preventDefault();
-    dispatch(fetchMovie(searchMovie));
+  const debouncedFetchMovie = useCallback(
+    debounce((query) => {
+      dispatch(fetchMovie(query));
+    }, 300),
+    [dispatch]
+  );
+
+  const searchMovieHandler = (e) => {
+    const value = e.target.value;
+    setSearchMovie(value);
+
+    if (value.trim().length >= 3) {
+      debouncedFetchMovie(value);
+    }
   };
+
   return (
-    <form onSubmit={findMovieHandler}>
+    <form>
       <TextField
         id="outlined-basic"
         label="Search any movie..."
